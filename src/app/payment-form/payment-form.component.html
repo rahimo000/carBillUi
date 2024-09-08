@@ -1,0 +1,110 @@
+<div class="container m-auto grid grid-cols-4 gap-1  text-white md:grid-cols-12 max-w-screen-xl px-10">
+    <!--
+    header that contains the total price
+    -->
+    <header class="border-b-2 border-gray-300 col-span-full text-black p-4 flex justify-between text-3xl">
+        <p class="text-gray-800 font-light">Total Price :</p>
+        <h2 class="font-bold flex items-end" >{{formData.total_price}}<span class="text-lg font-normal">$</span></h2>
+    </header>
+    <!-- 
+    the main content of the payment form that let the user enter their payment information
+      -->
+    <main class="col-span-4 p-4 md:col-span-7">
+        <form #form="ngForm" (submit)="onSubmit(form)">
+            <div class="grid gap-6 mb-6">
+                <div>
+                    <label for="types" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Type*</label>
+                    <select required id="types" [(ngModel)]="formData.type" #type="ngModel" name="type" (change)="refreshCalculations()"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="L">Luxilary</option>
+                        <option value="O">Regular</option>
+                    </select>
+                    <div class="text-red-800" [hidden]="type.valid">this field is required</div>
+                </div>
+                <div>
+                    <label for="base_price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle price*</label>
+                    <input type="number" id="base_price" [(ngModel)]="formData.base_price" #base_price="ngModel" name="base_price"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="500.00" required (change)="refreshCalculations()" />
+                    <div class="text-red-800" [hidden]="base_price.valid">this field is required</div>
+                    <div class="text-red-800" [hidden]="base_price.value >= 0">this field must be positive</div>
+                </div>
+                <div>
+                    <label for="custum_cost"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Custum Cost ($)</label>
+                    <div class="text-gray-400 text-sm mb-2" >The purpose of this cost is to allow the buyer to add their custom-uncovered cost. <br/> (let the value 0 if not applicable) </div>
+                    <input type="number" id="custum_cost" [(ngModel)]="formData.custom_cost" #custom_cost="ngModel" name="custom_cost"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="00.00" (change)="refreshCalculations()" />
+                    <div class="text-red-800" [hidden]="custom_cost.value >= 0">This field must be positive</div>
+                </div>
+            </div>
+
+            <button type="submit" [disabled]="!form.valid"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+        </form>
+
+    </main>
+    <!--
+    aside panel that shows the payment costs values calculated
+    -->
+    <aside class="col-span-5 w-full p-4">
+        <div class="flex flex-wrap gap-4 py-6 justify-center text-lg ">
+            <div 
+                class="bg-gray-50 flex-grow text-black border-l-8 border-green-500 rounded-md px-3 py-2 w-full ">
+                Base Cost <span class="bg-yellow-100 text-yellow-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300" > (20% limited)</span>
+        
+                <div class="text-gray-500 font-thin text-sm pt-1">
+                    <span>{{formData.base_Coast}}</span>
+                    <span> $</span>
+                    
+                </div>
+            </div>
+            <div 
+                class="bg-gray-50 flex-grow text-black border-l-8 border-green-500 rounded-md px-3 py-2 w-full ">
+                Special Cost
+        
+                <div class="text-gray-500 font-thin text-sm pt-1">
+                    <span>{{formData.special_Coast}}</span>
+                    <span> $</span>
+                    
+                </div>
+            </div>
+            <div 
+                class="bg-gray-50 flex-grow text-black border-l-8 border-green-500 rounded-md px-3 py-2 w-full ">
+                Assosiation Cost 
+        
+                <div class="text-gray-500 font-thin text-sm pt-1">
+                    <span>{{formData.association_Cost}}</span>
+                    <span> $</span>
+                    
+                </div>
+            </div>
+            <div 
+                class="bg-gray-50 flex-grow text-black border-l-8 border-green-500 rounded-md px-3 py-2 w-full ">
+                Entroposage Cost <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Fixed at 100$</span>
+        
+                <div class="text-gray-500 font-thin text-sm pt-1">
+                    <span>{{formData.fixed_cost}}</span>
+                    <span> $</span>
+                    
+                </div>
+            </div>
+            
+            
+            
+            
+        </div>
+    </aside>
+    <!--
+    footer that contains the overview of the application
+    -->
+    <footer class="col-span-full  p-2 min-h-[120px]">
+        
+<div class="block w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Overview</h5>
+    <p class="font-normal text-gray-700 dark:text-gray-400">an application that will allow a buyer to calculate the total price of a vehicle (regular or luxury) during an auction.</p>
+</div>
+    
+    </footer>
+</div>

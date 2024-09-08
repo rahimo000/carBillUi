@@ -1,0 +1,69 @@
+
+
+<div class="relative flex justify-center overflow-x-auto py-2 drop-shadow-md">
+    <table class="max-w-screen-xl text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Bill date
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Vehicle type ($)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Vehicle price ($)
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Base cost
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Specials costs
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Association costs
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Storage costs
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Custem costs
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Total Price
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of service.paymentList" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{item.buy_date}}
+                </th>
+                <td class="px-6 py-4">
+                    {{item.type == "O"?"Ordinary":"Luxilary"}}
+                </td>
+                <td class="px-6 py-4">
+                    {{item.base_price}}
+                </td>
+                <td class="px-6 py-4">
+                    {{item.base_Coast}}
+                </td>
+                <td class="px-6 py-4">
+                    {{item.special_Coast}}
+                </td>
+                <td class="px-6 py-4">
+                    {{item.association_Cost}}
+                </td>
+                <td class="px-6 py-4">
+                    {{item.fixed_cost}}
+                </td>
+                <td class="px-6 py-4">
+                    {{item.custom_cost}}
+                </td>
+                <td class="px-6 py-4">
+                    {{item.total_price}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
